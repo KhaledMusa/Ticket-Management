@@ -11,7 +11,7 @@ namespace Ticket_Management.Models
         [ForeignKey("Department")]
         public int DepartmentID { get; set; }
 
-        public Department Department { get; set; }
+        public Department? Department { get; set; }
         public List<Employee>? Employee { get; set; }
 
     }

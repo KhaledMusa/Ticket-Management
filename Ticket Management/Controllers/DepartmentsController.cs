@@ -7,24 +7,24 @@ namespace YourNamespace.Controllers
 {
     public class DepartmentsController : Controller
     {
-        private readonly IService<Department> _departmentService;
+        private readonly IService<Department> _Depatment;
 
         public DepartmentsController(IService<Department> departmentService)
         {
-            _departmentService = departmentService;
+            _Depatment = departmentService;
         }
 
         // GET: Department
         public async Task<IActionResult> Index()
         {
-            var departments = await _departmentService.GetAllAsync();
+            var departments = await _Depatment.GetAllAsync();
             return View(departments);
         }
 
         // GET: Department/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var department = await _departmentService.GetByIdAsync(id);
+            var department = await _Depatment.GetByIdAsync(id);
             if (department == null)
             {
                 return NotFound();
@@ -45,7 +45,7 @@ namespace YourNamespace.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _departmentService.AddAsync(department);
+                await _Depatment.AddAsync(department);
                 return RedirectToAction(nameof(Index));
             }
             return View(department);
@@ -54,7 +54,7 @@ namespace YourNamespace.Controllers
         // GET: Department/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            var department = await _departmentService.GetByIdAsync(id);
+            var department = await _Depatment.GetByIdAsync(id);
             if (department == null)
             {
                 return NotFound();
@@ -74,7 +74,7 @@ namespace YourNamespace.Controllers
 
             if (ModelState.IsValid)
             {
-                await _departmentService.UpdateAsync(department);
+                await _Depatment.UpdateAsync(department);
                 return RedirectToAction(nameof(Index));
             }
             return View(department);
@@ -83,7 +83,7 @@ namespace YourNamespace.Controllers
         // GET: Department/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            var department = await _departmentService.GetByIdAsync(id);
+            var department = await _Depatment.GetByIdAsync(id);
             if (department == null)
             {
                 return NotFound();
@@ -96,7 +96,7 @@ namespace YourNamespace.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _departmentService.DeleteAsync(id);
+            await _Depatment.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
     }

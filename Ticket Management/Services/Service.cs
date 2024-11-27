@@ -1,4 +1,5 @@
-﻿using Ticket_Management.Repository;
+﻿using System.Linq.Expressions;
+using Ticket_Management.Repository;
 
 namespace Ticket_Management.Services
 {
@@ -20,6 +21,8 @@ namespace Ticket_Management.Services
         public async Task UpdateAsync(T entity) => await _repository.UpdateAsync(entity);
 
         public async Task DeleteAsync(int id) => await _repository.DeleteAsync(id);
+
+     
     }
 
 }

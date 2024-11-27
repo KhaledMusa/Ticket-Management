@@ -1,4 +1,7 @@
-﻿namespace Ticket_Management.Repository
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+
+namespace Ticket_Management.Repository
 {
     public interface IRepository<T> where T : class
     {
@@ -7,6 +10,8 @@
         Task AddAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(int id);
+
+      
     }
 
 }

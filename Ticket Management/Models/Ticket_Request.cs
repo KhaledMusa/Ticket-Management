@@ -14,12 +14,12 @@ namespace Ticket_Management.Models
 
         [ForeignKey("Department")]
         public int DepartmentID { get; set; }
-        public Department Department { get; set; }
+        public Department? Department { get; set; }
 
 
         [ForeignKey("Employee")]
         public int EmployeeID { get; set; }
-        public Employee Employee { get; set; }
+        public Employee? Employee { get; set; }
 
         public List<Ticket_Request>? Requests { get; set; }
     }

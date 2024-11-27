@@ -15,11 +15,11 @@ namespace Ticket_Management.Models
         [ForeignKey("Department")]
         public int DepartmentID { get; set; }
 
-        public Department Department { get; set; }
+        public Department? Department { get; set; }
         [ForeignKey("Manager")]
         public int ManagerId { get; set; }
 
-        public Manager Manager { get; set; }
+        public Manager? Manager { get; set; }
         public List<Ticket_Request>? Requests { get; set; }
         public List<Ticket_Replay>? Replays { get; set; }
     }
