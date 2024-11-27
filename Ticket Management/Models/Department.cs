@@ -7,7 +7,6 @@ namespace Ticket_Management.Models
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
-        public string ManagerName { get; set; }
 
         public List<Employee>? Emps { get; set; }
         public List<Ticket_Request>? Requests { get; set; }

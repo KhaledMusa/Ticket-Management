@@ -1,11 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 using Ticket_Management.Models;
+using Ticket_Management.Repository;
+using Ticket_Management.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("TicketManagement")));
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

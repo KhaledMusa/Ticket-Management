@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Ticket_Management.Models;
 
@@ -11,9 +12,11 @@ using Ticket_Management.Models;
 namespace Ticket_Management.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241127072951_INIT")]
+    partial class INIT
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -228,6 +231,10 @@ namespace Ticket_Management.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ManagerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -256,9 +263,6 @@ namespace Ticket_Management.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ManagerId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -271,31 +275,7 @@ namespace Ticket_Management.Migrations
 
                     b.HasIndex("DepartmentID");
 
-                    b.HasIndex("ManagerId");
-
                     b.ToTable("Employees");
-                });
-
-            modelBuilder.Entity("Ticket_Management.Models.Manager", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("DepartmentID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DepartmentID");
-
-                    b.ToTable("Managers");
                 });
 
             modelBuilder.Entity("Ticket_Management.Models.Ticket_Replay", b =>
@@ -437,25 +417,6 @@ namespace Ticket_Management.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Ticket_Management.Models.Manager", "Manager")
-                        .WithMany("Employee")
-                        .HasForeignKey("ManagerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Department");
-
-                    b.Navigation("Manager");
-                });
-
-            modelBuilder.Entity("Ticket_Management.Models.Manager", b =>
-                {
-                    b.HasOne("Ticket_Management.Models.Department", "Department")
-                        .WithMany()
-                        .HasForeignKey("DepartmentID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Department");
                 });
 
@@ -523,11 +484,6 @@ namespace Ticket_Management.Migrations
                     b.Navigation("Replays");
 
                     b.Navigation("Requests");
-                });
-
-            modelBuilder.Entity("Ticket_Management.Models.Manager", b =>
-                {
-                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("Ticket_Management.Models.Ticket_Request", b =>
