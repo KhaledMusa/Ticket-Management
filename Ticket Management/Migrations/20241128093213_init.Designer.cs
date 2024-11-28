@@ -12,8 +12,8 @@ using Ticket_Management.Models;
 namespace Ticket_Management.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241128072248_init3")]
-    partial class init3
+    [Migration("20241128093213_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -251,18 +251,16 @@ namespace Ticket_Management.Migrations
                     b.Property<int>("DepartmentID")
                         .HasColumnType("int");
 
-                    b.Property<string>("JobTitle")
-                        .IsRequired()
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("JobDescrption")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ManagerId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Salary")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -359,9 +357,6 @@ namespace Ticket_Management.Migrations
                     b.Property<int>("EmployeeID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Ticket_RequestId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -371,8 +366,6 @@ namespace Ticket_Management.Migrations
                     b.HasIndex("DepartmentID");
 
                     b.HasIndex("EmployeeID");
-
-                    b.HasIndex("Ticket_RequestId");
 
                     b.ToTable("Ticket_Requests");
                 });
@@ -437,9 +430,9 @@ namespace Ticket_Management.Migrations
                         .IsRequired();
 
                     b.HasOne("Ticket_Management.Models.Manager", "Manager")
-                        .WithMany("Employee")
+                        .WithMany("Employees")
                         .HasForeignKey("ManagerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Department");
@@ -452,7 +445,7 @@ namespace Ticket_Management.Migrations
                     b.HasOne("Ticket_Management.Models.Department", "Department")
                         .WithMany("Managers")
                         .HasForeignKey("DepartmentID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Department");
@@ -469,13 +462,13 @@ namespace Ticket_Management.Migrations
                     b.HasOne("Ticket_Management.Models.Employee", "Employee")
                         .WithMany("Replays")
                         .HasForeignKey("EmployeeID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Ticket_Management.Models.Ticket_Request", "Request")
-                        .WithMany()
+                        .WithMany("Replays")
                         .HasForeignKey("TicketRequestID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Department");
@@ -496,12 +489,8 @@ namespace Ticket_Management.Migrations
                     b.HasOne("Ticket_Management.Models.Employee", "Employee")
                         .WithMany("Requests")
                         .HasForeignKey("EmployeeID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("Ticket_Management.Models.Ticket_Request", null)
-                        .WithMany("Requests")
-                        .HasForeignKey("Ticket_RequestId");
 
                     b.Navigation("Department");
 
@@ -528,12 +517,12 @@ namespace Ticket_Management.Migrations
 
             modelBuilder.Entity("Ticket_Management.Models.Manager", b =>
                 {
-                    b.Navigation("Employee");
+                    b.Navigation("Employees");
                 });
 
             modelBuilder.Entity("Ticket_Management.Models.Ticket_Request", b =>
                 {
-                    b.Navigation("Requests");
+                    b.Navigation("Replays");
                 });
 #pragma warning restore 612, 618
         }

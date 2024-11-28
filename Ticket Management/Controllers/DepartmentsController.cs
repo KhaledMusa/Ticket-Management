@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Ticket_Management.Models;
 using Ticket_Management.Services;
 
-namespace YourNamespace.Controllers
+namespace Ticket_Management.Controllers
 {
     public class DepartmentsController : Controller
     {

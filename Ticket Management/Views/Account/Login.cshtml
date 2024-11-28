@@ -1,0 +1,176 @@
+﻿@model Ticket_Management.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Body and Background */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1c1c34, #283593);
+            overflow: hidden;
+            color: white;
+        }
+
+        /* Split screen design */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            height: 90vh;
+            display: flex;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .form-container {
+            width: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            animation: slideInLeft 1s ease;
+        }
+
+        .form-container h2 {
+            font-size: 42px;
+            margin-bottom: 30px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-container p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .form-container .form-group {
+            position: relative;
+            width: 100%;
+            margin-bottom: 25px;
+        }
+
+        .form-container .form-group input {
+            width: 100%;
+            padding: 15px 20px 15px 60px;
+            font-size: 16px;
+            border-radius: 30px;
+            border: none;
+            background: rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        .form-container .form-group input:focus {
+            outline: none;
+            background: #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-container .form-group i {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            color: #283593;
+            font-size: 20px;
+        }
+
+        .form-container .form-group .text-danger {
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            background: linear-gradient(135deg, #283593, #1c1c34);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.5);
+            transform: scale(1.05);
+        }
+
+        /* Right Section */
+        .image-container {
+            width: 50%;
+            background: url('/image/dispatcher-male-and-female-airports-very-night-pur (1).jpg') no-repeat center center;
+            background-size: auto ;
+            position: relative;
+        }
+
+        .image-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        /* Animations */
+        @@keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Form Section -->
+        <div class="form-container">
+            <h2>Login</h2>
+            <p>Access your airport management system</p>
+            <form asp-action="Login" method="post">
+                <div class="form-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="Username" name="Username" placeholder="Username" required />
+                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="Password" name="Password" placeholder="Password" required />
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+        <!-- Image Section -->
+        <div class="image-container"></div>
+    </div>
+</body>
+</html>

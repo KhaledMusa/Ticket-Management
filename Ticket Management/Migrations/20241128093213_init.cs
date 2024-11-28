@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Ticket_Management.Migrations
 {
     /// <inheritdoc />
-    public partial class inti : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -56,8 +56,7 @@ namespace Ticket_Management.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ManagerName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -171,16 +170,36 @@ namespace Ticket_Management.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Managers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DepartmentID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Managers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Managers_Departments_DepartmentID",
+                        column: x => x.DepartmentID,
+                        principalTable: "Departments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Employees",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Salary = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    JobTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DepartmentID = table.Column<int>(type: "int", nullable: false)
+                    JobDescrption = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DepartmentID = table.Column<int>(type: "int", nullable: false),
+                    ManagerId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -191,6 +210,12 @@ namespace Ticket_Management.Migrations
                         principalTable: "Departments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Employees_Managers_ManagerId",
+                        column: x => x.ManagerId,
+                        principalTable: "Managers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -203,8 +228,7 @@ namespace Ticket_Management.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Attatchment = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DepartmentID = table.Column<int>(type: "int", nullable: false),
-                    EmployeeID = table.Column<int>(type: "int", nullable: false),
-                    Ticket_RequestId = table.Column<int>(type: "int", nullable: true)
+                    EmployeeID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -220,12 +244,7 @@ namespace Ticket_Management.Migrations
                         column: x => x.EmployeeID,
                         principalTable: "Employees",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Ticket_Requests_Ticket_Requests_Ticket_RequestId",
-                        column: x => x.Ticket_RequestId,
-                        principalTable: "Ticket_Requests",
-                        principalColumn: "Id");
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -255,13 +274,13 @@ namespace Ticket_Management.Migrations
                         column: x => x.EmployeeID,
                         principalTable: "Employees",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);  
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Ticket_Replays_Ticket_Requests_TicketRequestID",
                         column: x => x.TicketRequestID,
                         principalTable: "Ticket_Requests",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -309,6 +328,16 @@ namespace Ticket_Management.Migrations
                 column: "DepartmentID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Employees_ManagerId",
+                table: "Employees",
+                column: "ManagerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Managers_DepartmentID",
+                table: "Managers",
+                column: "DepartmentID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Ticket_Replays_DepartmentID",
                 table: "Ticket_Replays",
                 column: "DepartmentID");
@@ -332,11 +361,6 @@ namespace Ticket_Management.Migrations
                 name: "IX_Ticket_Requests_EmployeeID",
                 table: "Ticket_Requests",
                 column: "EmployeeID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Ticket_Requests_Ticket_RequestId",
-                table: "Ticket_Requests",
-                column: "Ticket_RequestId");
         }
 
         /// <inheritdoc />
@@ -371,6 +395,9 @@ namespace Ticket_Management.Migrations
 
             migrationBuilder.DropTable(
                 name: "Employees");
+
+            migrationBuilder.DropTable(
+                name: "Managers");
 
             migrationBuilder.DropTable(
                 name: "Departments");

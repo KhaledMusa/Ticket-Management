@@ -21,6 +21,6 @@ namespace Ticket_Management.Models
         public int EmployeeID { get; set; }
         public Employee? Employee { get; set; }
 
-        public List<Ticket_Request>? Requests { get; set; }
+        public List<Ticket_Replay>? Replays { get; set; }
     }
 }

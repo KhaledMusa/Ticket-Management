@@ -1,0 +1,16 @@
+﻿<h1>Manage Roles</h1>
+
+<h3>Create a New Role</h3>
+<form method="post" asp-action="CreateRole">
+    <label for="roleName">Role Name:</label>
+    <input type="text" id="roleName" name="roleName" required />
+    <button type="submit">Create Role</button>
+</form>
+
+<h3>Existing Roles:</h3>
+<ul>
+    @foreach (var role in ViewBag.Roles)
+    {
+        <li>@role.Name</li>
+    }
+</ul>

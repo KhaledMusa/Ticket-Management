@@ -12,7 +12,7 @@ namespace Ticket_Management.Models
         public int DepartmentID { get; set; }
 
         public Department? Department { get; set; }
-        public List<Employee>? Employee { get; set; }
+        public List<Employee>? Employees { get; set; }
 
     }
 }

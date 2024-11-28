@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Ticket_Management.ViewModels.UserListViewModel>
+
+@{
+    ViewData["Title"] = "User List";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow-lg">
+                <div class="card-header text-center bg-primary text-white">
+                    <h2><i class="fas fa-users me-2"></i>User List</h2>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Roles</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var user in Model)
+                            {
+                                <tr>
+                                    <td>@user.Username</td>
+                                    <td>
+                                        @string.Join(", ", user.Roles)  <!-- Display roles -->
+                                    </td>
+                                    <td>
+                                        <a asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-warning btn-sm">
+                                            <i class="fas fa-edit me-2"></i>Edit
+                                        </a>
+                                        <a asp-action="ResetPassword" asp-route-userId="@user.Id" class="btn btn-info btn-sm">
+                                            <i class="fas fa-edit me-2"></i>Reset Password
+                                        </a>
+                                        <a class="btn btn-danger btn-sm delete-user" asp-action="Delete" asp-route-id="@user.Id">
+                                            <i class="fas fa-trash me-2"></i>Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <div>
+                        <a href="@Url.Action("CreateUser", "Admin")" class="btn btn-success">
+                            <i class="fas fa-user-plus me-2"></i>Create New User
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Handle user deletion via AJAX
+            $('.delete-user').click(function () {
+                var userId = $(this).data('id');
+                var row = $(this).closest('tr');
+
+                if (confirm("Are you sure you want to delete this user?")) {
+                    $.ajax({
+                        url: '@Url.Action("DeleteUser", "Admin")',
+                        type: 'POST',
+                        data: { id: userId },
+                        success: function (response) {
+                            if (response.success) {
+                                row.remove(); // Remove the user row from the table
+                                alert('User deleted successfully!');
+                            } else {
+                                alert('Error deleting user');
+                            }
+                        },
+                        error: function () {
+                            alert('Error deleting user');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
