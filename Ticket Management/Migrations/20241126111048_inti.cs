@@ -220,7 +220,7 @@ namespace Ticket_Management.Migrations
                         column: x => x.EmployeeID,
                         principalTable: "Employees",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Ticket_Requests_Ticket_Requests_Ticket_RequestId",
                         column: x => x.Ticket_RequestId,
@@ -255,13 +255,13 @@ namespace Ticket_Management.Migrations
                         column: x => x.EmployeeID,
                         principalTable: "Employees",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);  
+                        onDelete: ReferentialAction.Cascade);  
                     table.ForeignKey(
                         name: "FK_Ticket_Replays_Ticket_Requests_TicketRequestID",
                         column: x => x.TicketRequestID,
                         principalTable: "Ticket_Requests",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

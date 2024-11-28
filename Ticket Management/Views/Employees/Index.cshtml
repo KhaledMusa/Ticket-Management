@@ -21,9 +21,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.JobTitle)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImageURL)
-            </th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.Department)
             </th>
@@ -45,14 +43,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.JobTitle)
             </td>
+            
             <td>
-                @Html.DisplayFor(modelItem => item.ImageURL)
+                @Html.DisplayFor(modelItem => item.Department.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Department.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Manager.Id)
+                @Html.DisplayFor(modelItem => item.Manager.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

@@ -10,8 +10,10 @@ namespace Ticket_Management.Models
         public string Name { get; set; }
         public string Salary { get; set; }
         public string JobTitle { get; set; }
-        public string ImageURL { get; set; }
-       
+        [NotMapped]
+        public IFormFile? ImageURL { get; set; }
+        public string? ImagePath { get; set; }
+
         [ForeignKey("Department")]
         public int DepartmentID { get; set; }
 

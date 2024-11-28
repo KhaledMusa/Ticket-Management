@@ -26,8 +26,8 @@ namespace Ticket_Management.Controllers
         // GET: managers
         public async Task<IActionResult> Index()
         {
-            var depatment = _Department.GetAllAsync();
-            ViewBag.Department=depatment.Result;
+            var depatment =await _Department.GetAllAsync();
+            ViewBag.Department = depatment;
             var managers = await _Manager.GetAllAsync();
             return View(managers);
         }
@@ -57,7 +57,7 @@ namespace Ticket_Management.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Manager managers)
         {
-            var department = _Department.GetAllAsync().Result;
+            var department =await _Department.GetAllAsync();
             ViewData["Department"] = new SelectList(department, "Id", "Name");
             if (ModelState.IsValid)
             {
